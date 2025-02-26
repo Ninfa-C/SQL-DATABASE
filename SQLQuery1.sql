@@ -23,3 +23,58 @@ SELECT * FROM dbo.[Order Details] WHERE Discount > 0;
 
 /*8) Selezione di tutti gli ordini del cliente con ID "BOTTM" le cui spese di trasporto superano l'importo di 50.*/
 SELECT * FROM dbo.Orders WHERE CustomerID = 'BOTTM' AND Freight > 50;
+
+
+--ESERCICI 26/02/2025
+
+USE Esercizio2;
+
+-- 1) Numero totale degli ordini
+SELECT COUNT(*) AS NumeroTotaleOrdini FROM dbo.Orders;
+
+-- 2) Numero totale di clienti
+SELECT COUNT(*) AS NumeroTotaleClienti FROM dbo.Customers;
+
+-- 3) Numero totale di clienti che abitano a Londra
+SELECT COUNT(*) AS NumeroClientiLondra FROM dbo.Customers WHERE City = 'London';
+
+-- 4) Media aritmetica del costo del trasporto di tutti gli ordini effettuati
+SELECT AVG(Freight) AS MediaCostoTrasporto FROM dbo.Orders;
+
+-- 5) Media aritmetica del costo del trasporto dei soli ordini effettuati dal cliente "BOTTM"
+SELECT AVG(Freight) AS MediaTrasportoBOTTM FROM dbo.Orders WHERE CustomerID = 'BOTTM';
+
+-- 6) Totale delle spese di trasporto effettuate raggruppate per id cliente
+SELECT CustomerID, SUM(Freight) AS TotaleSpeseTrasporto 
+FROM dbo.Orders 
+GROUP BY CustomerID;
+
+-- 7) Numero totale di clienti raggruppati per città di appartenenza
+SELECT City, COUNT(*) AS NumeroClienti 
+FROM dbo.Customers 
+GROUP BY City;
+
+-- 8) Totale di UnitPrice * Quantity raggruppato per ogni ordine
+SELECT OrderID, SUM(UnitPrice * Quantity) AS TotaleOrdine 
+FROM dbo.[Order Details] 
+GROUP BY OrderID;
+
+-- 9) Totale di UnitPrice * Quantity solo dell'ordine con id=10248
+SELECT SUM(UnitPrice * Quantity) AS TotaleOrdine10248 
+FROM dbo.[Order Details] 
+WHERE OrderID = 10248;
+
+-- 10) Numero di prodotti censiti per ogni categoria
+SELECT CategoryID, COUNT(*) AS NumeroProdotti 
+FROM dbo.Products 
+GROUP BY CategoryID;
+
+-- 11) Numero totale di ordini raggruppati per paese di spedizione (ShipCountry)
+SELECT ShipCountry, COUNT(*) AS NumeroOrdini 
+FROM dbo.Orders 
+GROUP BY ShipCountry;
+
+-- 12) Media del costo del trasporto raggruppata per paese di spedizione (ShipCountry)
+SELECT ShipCountry, AVG(Freight) AS MediaTrasporto 
+FROM dbo.Orders 
+GROUP BY ShipCountry;
